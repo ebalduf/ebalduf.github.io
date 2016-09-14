@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en"
-title                    : "Site Title"
+title                    : "Rambling on Technology, Skiing and Biking."
 title_separator          : "-"
-name                     : "Your Name"
-description              : "An amazing website."
+name                     : "Ed Balduf"
+description              : "A boring website."
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -55,7 +55,7 @@ yandex_site_verification :
 
 # Social Sharing
 twitter:
-  username               :
+  username               : "madskier5"
 facebook:
   username               :
   app_id                 :
@@ -77,10 +77,10 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "Ed Balduf"
   avatar           : "bio-photo.jpg"
-  bio              : "I am an amazing person."
-  location         : "Somewhere"
+  bio              : "Cloud Solutions Architect."
+  location         : "Boulder, CO"
   email            :
   uri              :
   bitbucket        :
@@ -89,9 +89,9 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           :
+  github           : "ebalduf"
   google_plus      :
-  keybase          :
+  keybase          : "ebalduf"
   instagram        :
   lastfm           :
   linkedin         :
@@ -100,7 +100,7 @@ author:
   stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
   steam            :
   tumblr           :
-  twitter          :
+  twitter          : "madskier5"
   vine             :
   weibo            :
   xing             :
