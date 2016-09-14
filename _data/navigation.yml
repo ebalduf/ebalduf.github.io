@@ -1,7 +1,7 @@
 # main links links
 main:
-  - title: "Sample Navigation Link"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/navigation/
+  - title: "Colorado Ski Conditions"
+    url: http://www.onthesnow.com/colorado/skireport.html
 
-  - title: "Sample Navigation Link 2"
-    url: /
+  - title: "Boulder Mountainbike Alliance"
+    url: https://bouldermountainbike.org/
