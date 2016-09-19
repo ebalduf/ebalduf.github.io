@@ -4,7 +4,9 @@ title: Cinder Docker Driver with Mesos/Marathon
 published: true
 ---
 
-[John Griffith](https://github.com/j-griffith) recently put together a Docker volume driver for OpenStack Cinder. John has recently posted about how to use the driver with [Docker](http://j-griffith.github.io/cinder-providing-block-storage-for-more-than-just-nova/) and with Docker swarm. In this blog post I will take you through how to use the same plugin with Mesos/Marathon. I'll cover this for Ubuntu and RHEL variants here and be back with some details about CoreOS in a later post.
+As a follow-on to two posts by my co-worker [John Griffith](https://github.com/j-griffith) around the Cinder Docker Driver, in this post I will take you through how to use the same plugin with Mesos/Marathon. John recently put together a Docker volume driver for OpenStack Cinder posted two great blog articles about how to use the driver with [Docker](http://j-griffith.github.io/cinder-providing-block-storage-for-more-than-just-nova/) and with [Docker swarm](http://j-griffith.github.io/cinder-providing-block-storage-for-more-than-just-nova-part-2/). In this blog post I'll cover how to setup and use the Cinder Docker Driver for Mesos/Marathon on Ubuntu and RHEL variants and be back with some additional details about CoreOS in a later post.
+
+First a question: Should it be called the Cinder Docker Driver, or the Docker Cinder Driver?
 
 ### Prerequisites
 
@@ -40,15 +42,16 @@ First create a mesos project
 | name        | mesos                            |
 +-------------+----------------------------------+
 ```
+
 Next create a mesos user under the project
 
     openstack user create --project mesos --password-prompt mesos
 
-Lastly you may need/want to manipulate the quotas for the project
+You may also need/want to manipulate the quotas for the project
 
     openstack quota set --volumes 20 --gigabytes 1000 mesos
 
-Next let's look at that config file (/var/lib/cinder/dockerdriver/config.json). Mine looks like the following (from one node), you will need to customize the InitiatorIP (and I recommend the HostUUID) for each node. For the UUID I chose to use the last octet of the IP address after a delimited 'aaa' so I can keep track of which node has the volume mounted. Also notice I have pulled the TenantID from the openstack project create command.
+Next let's look at that config file (/var/lib/cinder/dockerdriver/config.json). Mine looks like the following (from one node). You will need to customize the InitiatorIP (and I recommend the HostUUID) for each node. For the UUID I chose to use the last octet of the IP address after a delimited 'aaa' so I can keep track of which node has the volume mounted. Also notice I have pulled the TenantID from the openstack project create command.
 
 ```
     {
@@ -120,9 +123,9 @@ Now lets build a simple application in Marathon requesting a single 'default' si
 
 Go to the Marathon GUI
 ![MarathonGUI.png]({{site.baseurl}}/images/MarathonGUI.png)
-(you can do this via the API too if you want) and click on the 'Create Application' button, the click on the 'JSON mode' in the upper right and paste the json replacing what already there. Launch the application. Once the application is running you should see the following in the Marathon GUI
+(you can do this via the API too if you want) and click on the 'Create Application' button, then click on the 'JSON mode' in the upper right and paste the json replacing what already there. Launch the application. Once the application is running you should see the following in the Marathon GUI
 ![MarathonRunningApp.png]({{site.baseurl}}/images/MarathonRunningApp.png)
-You can drill into the application and Marathon will provide information where (which node) it ran the application on, as shown below. In this case running on container1.pm.solidfire.net at port 31548.
+You can drill into the application and Marathon will provide information where (which node) it ran the application on, as shown below. In the below case it is running on container1.pm.solidfire.net at port 31548.
 
 ![MarathonAppLocation.png]({{site.baseurl}}/images/MarathonAppLocation.png)
 
@@ -130,7 +133,7 @@ If you click on the second line with the location, it will take you to the runni
 
 ![WebserverListing.png]({{site.baseurl}}/images/WebserverListing.png)
 
-You can see that our volume has been mounted at /cinderDisk and I'll leave it as a excercize to confirm our testfile is there.  Now, lets have a look at Cinder
+You can see that our volume has been mounted at /cinderDisk and I'll leave it as a exercise to confirm our testfile is there.  Now, lets have a look at Cinder
 
 ```
 # cinder list
@@ -162,11 +165,11 @@ CONTAINER ID        IMAGE                  COMMAND                  CREATED     
 +--------------------------------------+--------+------------+------+-------------+----------+--------------------------------------+
 ```
 
-As an excercise you can kill this application, modify the json and remove the 'touch testfile' from the commmand line and then restart the application to prove that the volume contents remain unchanged.
+As an exercise you can kill this application, modify the json and remove the 'touch testfile' from the commmand line and then restart the application to prove that the volume contents remain unchanged.
 
 ### Other stuff
 
-One of the things you will notice is that the volume is of the size defined in the 'DefaultVolSz' line of the config file. Docker designed their interfaces with the idea of excplicit volume creation, what we have done is implicitly created the volume on container start.  What Docker really wants us to do is to create this volume before we create the application. To do that, we'll kill our application (Through the Marathon GUI) and then we'll login to one of our Mesos nodes and remove the volume, explicitly create a new volume with the same name, specifying the size and type of the volume on the create command.  Then start the application again, pointing it to the volume by name and it will just pickup that volume, mount, and use it.
+One of the things you will notice is that the volume is of the size defined in the 'DefaultVolSz' line of the config file. Docker designed their interfaces with the idea of explicit volume creation, what we have done is implicitly created the volume on container start.  What Docker really wants us to do is to create this volume before we create the application. To do that, we'll kill our application (Through the Marathon GUI) and then we'll login to one of our Mesos nodes and remove the volume, explicitly create a new volume with the same name, specifying the size and type of the volume on the create command.  Then start the application again, pointing it to the volume by name and it will just pickup that volume, mount, and use it.
 
 ```
 $ docker volume ls

@@ -90,7 +90,7 @@ defaults:
 # Site Author
 author:
   name             : "Ed Balduf"
-  avatar           : "bio-photo.jpg"
+  avatar           : "bike_icon_mountain.jpg"
   bio              : "Cloud Solutions Architect."
   location         : "Boulder, CO"
   email            :
