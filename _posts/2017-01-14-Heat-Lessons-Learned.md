@@ -112,9 +112,9 @@ online for it. A great starting point is
 
    This lead to the requirement that I have two keys on the default account, one for root@deployment_node and one for myself to get in.  To prevent putting my private key in the template (never do that), I generated a keypair for root@deployment_node, within the template, passed it to the instances and then added my public key afterwards.
 
-  Three things are a pain here 1) Adding the private key to the root account took some magic with 'sed' and I still didn't get it to handle variable key lengths. 2) I had to manually stick the second key on the default user account. 3) The fact that most cloud instances do NOT allow one to directly ssh to root, is good and annoying at the same time.
+   Three things are a pain here 1) Adding the private key to the root account took some magic with 'sed' and I still didn't get it to handle variable key lengths. 2) I had to manually stick the second key on the default user account. 3) The fact that most cloud instances do NOT allow one to directly ssh to root, is good and annoying at the same time.
 
-  I'm sure there are better ways to do this, but my head was spinning by the time I understood what was needed and how to get it done.
+   I'm sure there are better ways to do this, but my head was spinning by the time I understood what was needed and how to get it done.
 
 9. **Heat is constantly changing** - Watch out for the Heat Domain Specific Language changes on each release of OpenStack. I was trying to make this all work on an OpenStack Mitaka and I read the document and found a great way to do something, BUT NO, it only works on Newton or better.  Here's the example:
 
