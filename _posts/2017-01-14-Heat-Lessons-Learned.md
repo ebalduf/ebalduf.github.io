@@ -1,7 +1,7 @@
 ---
 layout: single
 title: OpenStack Heat, Lessons Learned
-published: false
+published: true
 ---
 
 As a follow-on and a learning exercise from the last post here, I decided to
