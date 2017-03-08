@@ -4,7 +4,7 @@ title: OpenStack Cinder (Block storage) Private Volume Types.
 published: true
 ---
 
-Another quick post because I have been asked about this a couple times in the
+Another quick post because I have been asked about this a couple times in the 
 last 2 weeks.  This is documented in the OpenStack documentation, but not in a
 way that people seem to find, read and understand. Hopefully, this explanation
 will be clearer.
